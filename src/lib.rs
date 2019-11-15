@@ -47,8 +47,7 @@ pub fn write_ihdr(
 }
 
 pub fn write_idat<'a>(buffer: &mut Vec<u8>, screen_data: &'a [u8]) {
-    // Writing stream of image bytes
-    buffer.extend_from_slice(screen_data);
+    write_chunk(buffer, "IDAT", &mut Vec::from(screen_data))
 }
 
 pub fn write_iend(buffer: &mut Vec<u8>) {
