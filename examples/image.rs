@@ -14,6 +14,7 @@ fn main() {
 
     let mut buf = vec![];
     image_encoder::write_header(&mut buf);
+    image_encoder::write_chunks(&mut buf);
 
     let mut file = File::create("output.png").unwrap();
     file.write_all(buf.as_slice()).unwrap();
