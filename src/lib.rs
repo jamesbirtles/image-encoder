@@ -1,5 +1,3 @@
-use std::io::Write;
-
 pub fn write_header(buffer: &mut Vec<u8>) {
     buffer.push(0x89);
 
@@ -23,12 +21,11 @@ pub fn write_chunks() {
     //TODO Chunk code here
 }
 
-pub fn write_pixels<'a>(
-    screen_data: &'a mut Vec<u8>,
-    height: &u8,
-    width: &u8,
-    buffer: &mut Vec<u8>,
-) {
+pub fn write_idat<'a>(screen_data: &'a mut Vec<u8>, height: &u8, width: &u8, buffer: &mut Vec<u8>) {
     // Writing stream of image bytes
     buffer.append(screen_data);
+}
+
+pub fn write_iend() {
+    //TODO add IEND chunk
 }
