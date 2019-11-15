@@ -1,7 +1,7 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
+pub fn write_header() {
+    // TODO Header Code here
+}
+
+pub fn write_body() {
+    // TODO body code here
 }
