@@ -17,11 +17,28 @@ pub fn write_header(buffer: &mut Vec<u8>) {
     buffer.push(0x0A);
 }
 
-pub fn write_chunks(buffer: &mut Vec<u8>) {
-    write_chunk(buffer, "IHDR", &mut vec![]);
+pub fn write_ihdr(
+    buffer: &mut Vec<u8>,
+    height: &mut u32,
+    width: &u32,
+    bit_depth: u8,
+    color_type: u8,
+    compression_method: u8,
+    filter_method: u8,
+    interlace_method: u8,
+) {
+    let mut ihdr_buff = Vec::with_capacity(13);
+    ihdr_buff.extend_from_slice(&height.to_be_bytes());
+    ihdr_buff.extend_from_slice(&width.to_be_bytes());
+    ihdr_buff.push(bit_depth);
+    ihdr_buff.push(color_type);
+    ihdr_buff.push(compression_method);
+    ihdr_buff.push(filter_method);
+    ihdr_buff.push(interlace_method);
+    write_chunk(buffer, "IHDR", &mut ihdr_buff);
 }
 
-pub fn write_idat<'a>(screen_data: &'a mut Vec<u8>, height: &u8, width: &u8, buffer: &mut Vec<u8>) {
+pub fn write_idat<'a>(screen_data: &'a mut Vec<u8>, buffer: &mut Vec<u8>) {
     // Writing stream of image bytes
     buffer.append(screen_data);
 }
