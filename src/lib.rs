@@ -20,7 +20,7 @@ pub fn write_header(buffer: &mut Vec<u8>) {
 }
 
 pub fn write_chunks(buffer: &mut Vec<u8>, screen_data: &[u8], width: u32, height: u32) {
-    write_ihdr(buffer, width, height, 8u8, 6u8, 0u8, 0u8, 0u8);
+    write_ihdr(buffer, width, height, 32u8, 6u8, 0u8, 0u8, 0u8);
     write_idat(buffer, screen_data);
     write_iend(buffer);
 }
@@ -47,7 +47,13 @@ pub fn write_ihdr(
 }
 
 pub fn write_idat<'a>(buffer: &mut Vec<u8>, screen_data: &'a [u8]) {
-    write_chunk(buffer, "IDAT", &mut Vec::from(screen_data))
+    let mut screen_u32: Vec<u8> = screen_data.iter().fold(vec![], |mut bytes, x| {
+        let x_as_u32 = (*x as u32).to_be_bytes();
+        bytes.extend_from_slice(&x_as_u32);
+        bytes
+    });
+
+    write_chunk(buffer, "IDAT", &mut screen_u32)
 }
 
 pub fn write_iend(buffer: &mut Vec<u8>) {
