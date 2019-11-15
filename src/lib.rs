@@ -17,8 +17,8 @@ pub fn write_header(buffer: &mut Vec<u8>) {
     buffer.push(0x0A);
 }
 
-pub fn write_chunks() {
-    //TODO Chunk code here
+pub fn write_chunks(buffer: &mut Vec<u8>) {
+    write_chunk(buffer, "IHDR", &mut vec![]);
 }
 
 pub fn write_idat<'a>(screen_data: &'a mut Vec<u8>, height: &u8, width: &u8, buffer: &mut Vec<u8>) {
@@ -28,4 +28,12 @@ pub fn write_idat<'a>(screen_data: &'a mut Vec<u8>, height: &u8, width: &u8, buf
 
 pub fn write_iend() {
     //TODO add IEND chunk
+}
+
+fn write_chunk(buffer: &mut Vec<u8>, kind: &str, data: &mut Vec<u8>) {
+    let type_bytes = kind.as_bytes();
+
+    buffer.extend_from_slice(&(data.len() as u32).to_be_bytes());
+    buffer.extend_from_slice(type_bytes);
+    buffer.append(data);
 }
