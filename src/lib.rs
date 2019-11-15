@@ -17,4 +17,8 @@ pub fn write_header(buffer: &mut Vec<u8>) {
     buffer.push(0x0A);
 }
 
-pub fn write_body() {}
+pub fn write_chunks() {
+    //TODO Chunk code here
+}
+
+pub fn write_body<'a>(screen_data: &'a Vec<u8>) {}
