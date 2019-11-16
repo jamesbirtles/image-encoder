@@ -4,6 +4,27 @@ use crc::{crc32, Hasher32};
 use std::io;
 use zlib::compress;
 
+pub struct Image<'a> {
+    pub width: u32,
+    pub height: u32,
+    data: &'a [u8],
+}
+
+impl<'a> Image<'a> {
+    pub fn new(data: &'a [u8], width: u32, height: u32) -> Image<'a> {
+        Image {
+            data,
+            width,
+            height,
+        }
+    }
+
+    pub fn encode_into<W: io::Write>(&self, buffer: &mut W) -> io::Result<()> {
+        write_header(buffer)?;
+        write_chunks(buffer, self.data, self.width, self.height)
+    }
+}
+
 pub fn write_header<W: io::Write>(buffer: &mut W) -> io::Result<()> {
     buffer.write_all(b"\x89PNG\r\n\x1A\n")
 }

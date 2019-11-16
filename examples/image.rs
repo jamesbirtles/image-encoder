@@ -23,14 +23,9 @@ fn main() {
         }
     }
 
+    let image = png::Image::new(&bitflipped, width as u32, height as u32);
+
     let mut file = File::create("output.png").unwrap();
-    png::write_header(&mut file).unwrap();
-    png::write_chunks(
-        &mut file,
-        bitflipped.as_slice(),
-        width as u32,
-        height as u32,
-    )
-    .unwrap();
+    image.encode_into(&mut file).unwrap();
     file.flush().unwrap();
 }
