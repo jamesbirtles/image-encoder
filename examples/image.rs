@@ -4,7 +4,7 @@ use scrap::{Capturer, Display};
 use std::fs::File;
 use std::io::prelude::*;
 
-use image_encoder;
+use image_encoder::png;
 
 fn main() {
     let display = Display::primary().expect("Couldn't find primary display.");
@@ -23,11 +23,14 @@ fn main() {
         }
     }
 
-    let mut buf = vec![];
-    image_encoder::write_header(&mut buf);
-    image_encoder::write_chunks(&mut buf, bitflipped.as_slice(), width as u32, height as u32);
-
     let mut file = File::create("output.png").unwrap();
-    file.write_all(buf.as_slice()).unwrap();
+    png::write_header(&mut file).unwrap();
+    png::write_chunks(
+        &mut file,
+        bitflipped.as_slice(),
+        width as u32,
+        height as u32,
+    )
+    .unwrap();
     file.flush().unwrap();
 }
