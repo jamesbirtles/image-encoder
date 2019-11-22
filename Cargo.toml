@@ -4,6 +4,7 @@ version = "0.1.0"
 license = "MIT"
 description = "simple image encoder for png encoding"
 documentation = "https://docs.rs/image-encoder"
+repository = "https://github.com/UnwrittenFun/image-encoder"
 authors = ["James Birtles <jameshbirtles@gmail.com>", "James Swash <james.swash@hotmail.co.uk>"]
 edition = "2018"
 
