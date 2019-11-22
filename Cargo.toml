@@ -1,7 +1,10 @@
 [package]
 name = "image-encoder"
 version = "0.1.0"
-authors = ["James Birtles <james.birtles@tocabot.io>"]
+license = "MIT"
+description = "simple image encoder for png encoding"
+documentation = "https://docs.rs/image-encoder"
+authors = ["James Birtles <jameshbirtles@gmail.com>", "James Swash <james.swash@hotmail.co.uk>"]
 edition = "2018"
 
 [dependencies]
